@@ -1,0 +1,805 @@
+{
+    "type": "extension",
+    "id": "com.terra-it.tit-form",
+    "version": "1.3.22",
+    "revision": 32,
+    "compatibility": "4.2+",
+    "title": "Terra-IT Form Builder",
+    "description": "Bouw makkelijk Contact en bereken uw prijs formulieren. Standaard velden kunnen worden hergebruikt.\r\n\r\n//Changelog 07/07/2017\r\n1 Unclosed div mystery solved?\r\n2 Geen radiogroup meer\r\n3 Gemerged met andere versie\r\n\r\n//Changelog 05/07/2017\r\n1 HTML / php verbeteringen\r\n\r\n//Changelog 04/07/2017\r\n1 Button tekst veranderbaar\r\n2 Geen div meer in een radiogroup\r\n3 Geen form action meer\r\n4 Custom succesmelding instelbaar\r\n\r\n//Changelog 23/05/2017\r\n1 Fieldtype included\r\n2 Section title kan op &amp;amp;amp;amp;amp;amp;amp;amp;quot;verborgen&amp;amp;amp;amp;amp;amp;amp;amp;quot; worden gezet voor de front-end\r\n\r\n\r\n//Changelog 15/02/2017\r\n// 1. Formulierkiezer werkt nu ook goed met meerder formulieren op 1 site\r\n// 2. Formulier template voor bijvoorbeeld mailchimp is nu op te slaan in een bestand\r\n// 3. Mailtemplate voor backend is geupdate\r\n\r\n\r\n// Changelog 07/02/2017\r\n// 1. Sterretjes bij verplicht\r\n// 2. Om elk veld een form input group div gezet voor makkelijke css aanpasbaarheid\r\n// 3. Let op, verwijder de list styling uit elements.less en gebruik form.less voor input velden styling \r\n\r\n//Changelog 03-02-2017\r\n// 1. Namen van formuliersecties zichtbaar\r\n// 2. Formulier introductie tekst zichtbaar.\r\n// 3. Fuck google captcha, het is eruit.\r\n// 4. Random string honeypot en minimale form invultijd honeypot added\r\n// 5. Anders namelijk... bug gefixt.\r\n// 6. Cleaned up\r\n// 7. Server side required velden check fixed\r\n// 8. Elke keer dat een form word gegenereerd krijgt deze een unieke ID, dit maakt meerdere forms op een pagina mogelijk, ook minder kans op misbruik.\r\n// 9. IP Adres van gebruiker word meegestuurd.\r\n\r\n",
+    "keywords": [
+        "bouw",
+        "formulieren",
+        "terra-it",
+        "2017",
+        "v1.3"
+    ],
+    "author": {
+        "name": "Terra-IT",
+        "url": "http://terra-it.com",
+        "email": "info@terra-it.com"
+    },
+    "licenses": {
+        "Proprietary": ""
+    },
+    "components": {
+        "module_groups": [
+            {
+                "id": "5",
+                "name": "Algemeen",
+                "route": "algemeen",
+                "position": "0",
+                "extension": "com.terra-it.tit-form"
+            },
+            {
+                "id": "6",
+                "name": "TiT Form",
+                "route": "tit-form",
+                "position": "0",
+                "extension": "com.terra-it.tit-form"
+            }
+        ],
+        "modules": [
+            {
+                "id": "7",
+                "group": "5",
+                "name": "Talen",
+                "route": "com.terra-it.tit-form*talen",
+                "class": "Languages",
+                "icon": "email",
+                "gbp": {
+                    "name": "",
+                    "table": "",
+                    "item_parser": "",
+                    "other_table": ""
+                },
+                "position": "0",
+                "extension": "com.terra-it.tit-form",
+                "actions": [
+                    {
+                        "id": "19",
+                        "module": "7",
+                        "name": "View Talens",
+                        "route": "",
+                        "in_nav": "on",
+                        "form": null,
+                        "view": "7",
+                        "report": null,
+                        "class": "list",
+                        "level": "0",
+                        "position": "1"
+                    },
+                    {
+                        "id": "20",
+                        "module": "7",
+                        "name": "Add Talen",
+                        "route": "add",
+                        "in_nav": "on",
+                        "form": "7",
+                        "view": null,
+                        "report": null,
+                        "class": "add",
+                        "level": "0",
+                        "position": "0"
+                    },
+                    {
+                        "id": "21",
+                        "module": "7",
+                        "name": "Edit Talen",
+                        "route": "edit",
+                        "in_nav": "",
+                        "form": "7",
+                        "view": null,
+                        "report": null,
+                        "class": "edit",
+                        "level": "0",
+                        "position": "0"
+                    }
+                ],
+                "views": [
+                    {
+                        "id": "7",
+                        "module": "7",
+                        "title": "Talens",
+                        "description": "",
+                        "type": "draggable",
+                        "table": "languages",
+                        "fields": {
+                            "title": {
+                                "width": "172",
+                                "title": "Titel",
+                                "parser": "",
+                                "numeric": false
+                            },
+                            "country_flag": {
+                                "width": "172",
+                                "title": "Vlag van het land",
+                                "parser": "",
+                                "numeric": false
+                            },
+                            "short_title": {
+                                "width": "172",
+                                "title": "Korte titel",
+                                "parser": "",
+                                "numeric": false
+                            },
+                            "root_page_id": {
+                                "width": "172",
+                                "title": "Pagina root ID",
+                                "parser": "",
+                                "numeric": false
+                            }
+                        },
+                        "options": null,
+                        "actions": {
+                            "approve": "on",
+                            "edit": "on",
+                            "delete": "on"
+                        },
+                        "preview_url": "",
+                        "related_form": null
+                    }
+                ],
+                "forms": [
+                    {
+                        "id": "7",
+                        "module": "7",
+                        "title": "Talen",
+                        "table": "languages",
+                        "fields": [
+                            {
+                                "column": "title",
+                                "type": "text",
+                                "title": "Title",
+                                "subtitle": "",
+                                "options": {
+                                    "validation": "required",
+                                    "sub_type": "",
+                                    "max_length": "",
+                                    "column": "title"
+                                }
+                            },
+                            {
+                                "column": "country_flag",
+                                "type": "text",
+                                "title": "Vlag van het land",
+                                "subtitle": "",
+                                "options": {
+                                    "column": "country_flag"
+                                }
+                            },
+                            {
+                                "column": "short_title",
+                                "type": "text",
+                                "title": "Korte titel",
+                                "subtitle": "",
+                                "options": {
+                                    "validation": "required",
+                                    "sub_type": "",
+                                    "max_length": "",
+                                    "column": "short_title"
+                                }
+                            },
+                            {
+                                "column": "root_page_id",
+                                "type": "text",
+                                "title": "Pagina root ID",
+                                "subtitle": "",
+                                "options": {
+                                    "validation": "numeric required",
+                                    "sub_type": "",
+                                    "max_length": "",
+                                    "column": "root_page_id"
+                                }
+                            }
+                        ],
+                        "default_position": "Bottom",
+                        "return_view": null,
+                        "return_url": "",
+                        "tagging": "",
+                        "hooks": []
+                    }
+                ],
+                "embed_forms": [],
+                "reports": []
+            },
+            {
+                "id": "8",
+                "group": "6",
+                "name": "Formulieren",
+                "route": "com.terra-it.tit-form*tit-form",
+                "class": "TitForm",
+                "icon": "user",
+                "gbp": {
+                    "name": "",
+                    "table": "",
+                    "item_parser": "",
+                    "other_table": ""
+                },
+                "position": "0",
+                "extension": "com.terra-it.tit-form",
+                "actions": [
+                    {
+                        "id": "22",
+                        "module": "8",
+                        "name": "View TiT Forms",
+                        "route": "",
+                        "in_nav": "on",
+                        "form": null,
+                        "view": "8",
+                        "report": null,
+                        "class": "list",
+                        "level": "0",
+                        "position": "1"
+                    },
+                    {
+                        "id": "23",
+                        "module": "8",
+                        "name": "Add TiT Form",
+                        "route": "add",
+                        "in_nav": "on",
+                        "form": "8",
+                        "view": null,
+                        "report": null,
+                        "class": "add",
+                        "level": "0",
+                        "position": "0"
+                    },
+                    {
+                        "id": "24",
+                        "module": "8",
+                        "name": "Edit TiT Form",
+                        "route": "edit",
+                        "in_nav": "",
+                        "form": "8",
+                        "view": null,
+                        "report": null,
+                        "class": "edit",
+                        "level": "0",
+                        "position": "0"
+                    }
+                ],
+                "views": [
+                    {
+                        "id": "8",
+                        "module": "8",
+                        "title": "TiT Forms",
+                        "description": "",
+                        "type": "draggable",
+                        "table": "tit_form",
+                        "fields": {
+                            "title": {
+                                "width": "236",
+                                "title": "Titel",
+                                "parser": "",
+                                "numeric": false
+                            },
+                            "type": {
+                                "width": "236",
+                                "title": "Formulier type",
+                                "parser": "if($value == 'calculate-form'){     $value = 'Formulier in stappen'; } if($value == 'contact-form'){     $value = 'Standaard formulier'; }",
+                                "numeric": false
+                            },
+                            "language": {
+                                "width": "236",
+                                "title": "Taal",
+                                "parser": "",
+                                "numeric": false
+                            }
+                        },
+                        "options": null,
+                        "actions": {
+                            "approve": "on",
+                            "edit": "on",
+                            "delete": "on"
+                        },
+                        "preview_url": "",
+                        "related_form": null
+                    }
+                ],
+                "forms": [
+                    {
+                        "id": "8",
+                        "module": "8",
+                        "title": "TiT Form",
+                        "table": "tit_form",
+                        "fields": [
+                            {
+                                "column": "language",
+                                "type": "list",
+                                "title": "Taal",
+                                "subtitle": "",
+                                "options": {
+                                    "list_type": "db",
+                                    "allow-empty": "Yes",
+                                    "pop-table": "languages",
+                                    "pop-description": "title",
+                                    "pop-sort": "`title` ASC",
+                                    "parser": "",
+                                    "column": "language"
+                                }
+                            },
+                            {
+                                "column": "title",
+                                "type": "text",
+                                "title": "Titel van formulier",
+                                "subtitle": "",
+                                "options": {
+                                    "column": "title"
+                                }
+                            },
+                            {
+                                "column": "comment",
+                                "type": "html",
+                                "title": "Korte tekst",
+                                "subtitle": "(bijvoorbeeld extra toelichting of instructies)",
+                                "options": {
+                                    "simple_by_permission": "0",
+                                    "column": "comment"
+                                }
+                            },
+                            {
+                                "column": "form_stages",
+                                "type": "matrix",
+                                "title": "Formulier secties / stappen",
+                                "subtitle": "",
+                                "options": {
+                                    "max": "4",
+                                    "style": "list",
+                                    "columns": [
+                                        {
+                                            "type": "text",
+                                            "id": "title",
+                                            "title": "Sectie titel",
+                                            "subtitle": "",
+                                            "display_title": "on",
+                                            "options": ""
+                                        },
+                                        {
+                                            "type": "checkbox",
+                                            "id": "hide_title",
+                                            "title": "Sectie titel verbergen",
+                                            "subtitle": "",
+                                            "options": ""
+                                        },
+                                        {
+                                            "type": "one-to-many",
+                                            "id": "section",
+                                            "title": "Sectie velden",
+                                            "subtitle": "",
+                                            "options": "{\"table\":\"TitFormBaseFields\",\"title_column\":\"title\",\"sort_by_column\":\"`position` DESC\",\"parser\":\"\",\"show_add_all\":\"on\",\"show_reset\":\"on\"}"
+                                        }
+                                    ],
+                                    "column": "form_stages"
+                                }
+                            },
+                            {
+                                "column": "type",
+                                "type": "list",
+                                "title": "Formulier sectie indeling",
+                                "subtitle": "meteen alle formulier secties tonen of in delen laten zien die pas zichtbaar worden na het invullen van de vorige?",
+                                "options": {
+                                    "validation": "required",
+                                    "list_type": "static",
+                                    "allow-empty": "No",
+                                    "list": [
+                                        {
+                                            "value": "contact-form",
+                                            "description": "Normaal (voor contactformulier o.a.)"
+                                        },
+                                        {
+                                            "value": "calculate-form",
+                                            "description": "Verdeeld in stappen (voor prijscalculatie o.a.)"
+                                        }
+                                    ],
+                                    "pop-table": "",
+                                    "parser": "",
+                                    "column": "type"
+                                }
+                            },
+                            {
+                                "column": "error_introduction",
+                                "type": "textarea",
+                                "title": "Foutmelding wanneer formulier verkeerd is ingevuld",
+                                "subtitle": "tekst boven opsomming van verkeerde / niet ingevulde velden",
+                                "options": {
+                                    "column": "error_introduction"
+                                }
+                            },
+                            {
+                                "column": "success_message",
+                                "type": "text",
+                                "title": "Succesmelding",
+                                "subtitle": "",
+                                "options": {
+                                    "column": "success_message"
+                                }
+                            },
+                            {
+                                "column": "email_from",
+                                "type": "text",
+                                "title": "E-mailadres waarmee het formulier mailt (noreply@bedrijfsnaam.nl raden wij aan)",
+                                "subtitle": "het e-mail adres waarmee ingevulde formulieren (naar u) worden gestuurd",
+                                "options": {
+                                    "column": "email_from"
+                                }
+                            },
+                            {
+                                "column": "image",
+                                "type": "upload",
+                                "title": "Logo",
+                                "subtitle": "logo voor in het e-mailbericht dat het formulier verstuurd",
+                                "options": {
+                                    "directory": "files/modules/",
+                                    "image": "on",
+                                    "min_width": "300",
+                                    "min_height": "",
+                                    "preview_prefix": "",
+                                    "retina": "on",
+                                    "thumbs": [
+                                        {
+                                            "prefix": "mail_",
+                                            "width": "300",
+                                            "height": "",
+                                            "grayscale": ""
+                                        }
+                                    ],
+                                    "column": "image"
+                                }
+                            },
+                            {
+                                "column": "subject",
+                                "type": "text",
+                                "title": "Onderwerp van e-mailberichten die het formulier vertuurd naar u",
+                                "subtitle": "onderwerp van de mail die u in uw mailbox krijgt wanneer iemand een formulier heeft ingevuld",
+                                "options": {
+                                    "column": "subject"
+                                }
+                            },
+                            {
+                                "column": "email_to",
+                                "type": "text",
+                                "title": "E-mailadres waar de ingevulde formulieren heen worden gestuurd",
+                                "subtitle": "meestal uw eigen (bedrijfs) e-mailadres",
+                                "options": {
+                                    "column": "email_to"
+                                }
+                            },
+                            {
+                                "column": "return_title",
+                                "type": "text",
+                                "title": "E-mailbericht titel (Klant)",
+                                "subtitle": "Titel van de e-mail die naar de klant verstuurd word",
+                                "options": {
+                                    "column": "return_title"
+                                }
+                            },
+                            {
+                                "column": "reply_template",
+                                "type": "checkbox",
+                                "title": "E-mailbericht template",
+                                "subtitle": "dit e-mailbericht wordt verstuurd naar degene die het formulier heeft ingevuld op uw website",
+                                "options": {
+                                    "simple_by_permission": "0",
+                                    "column": "reply_template"
+                                }
+                            },
+                            {
+                                "column": "button_text",
+                                "type": "text",
+                                "title": "Button Tekst",
+                                "subtitle": "",
+                                "options": {
+                                    "validation": "required",
+                                    "sub_type": "",
+                                    "max_length": "",
+                                    "column": "button_text"
+                                }
+                            }
+                        ],
+                        "default_position": "Bottom",
+                        "return_view": null,
+                        "return_url": "",
+                        "tagging": "",
+                        "hooks": []
+                    }
+                ],
+                "embed_forms": [],
+                "reports": []
+            },
+            {
+                "id": "9",
+                "group": "6",
+                "name": "Formuliervelden",
+                "route": "com.terra-it.tit-form*tit-form-basis-velden",
+                "class": "TitFormBaseFields",
+                "icon": "setup",
+                "gbp": {
+                    "name": "",
+                    "table": "",
+                    "item_parser": "",
+                    "other_table": ""
+                },
+                "position": "0",
+                "extension": "com.terra-it.tit-form",
+                "actions": [
+                    {
+                        "id": "25",
+                        "module": "9",
+                        "name": "View TiT Form Formuliervelden",
+                        "route": "",
+                        "in_nav": "on",
+                        "form": null,
+                        "view": "9",
+                        "report": null,
+                        "class": "list",
+                        "level": "0",
+                        "position": "1"
+                    },
+                    {
+                        "id": "26",
+                        "module": "9",
+                        "name": "Add Formulierveld",
+                        "route": "add",
+                        "in_nav": "on",
+                        "form": "9",
+                        "view": null,
+                        "report": null,
+                        "class": "add",
+                        "level": "0",
+                        "position": "0"
+                    },
+                    {
+                        "id": "27",
+                        "module": "9",
+                        "name": "Edit Formulierveld",
+                        "route": "edit",
+                        "in_nav": "",
+                        "form": "9",
+                        "view": null,
+                        "report": null,
+                        "class": "edit",
+                        "level": "0",
+                        "position": "0"
+                    }
+                ],
+                "views": [
+                    {
+                        "id": "9",
+                        "module": "9",
+                        "title": "TiT Form Formuliervelden",
+                        "description": "",
+                        "type": "draggable",
+                        "table": "TitFormBaseFields",
+                        "fields": {
+                            "title": {
+                                "width": "236",
+                                "title": "Titel",
+                                "parser": "",
+                                "numeric": false
+                            },
+                            "type": {
+                                "width": "236",
+                                "title": "Type",
+                                "parser": "if($value == 'text'){     $value = 'Tekst - enkele regel'; } if($value == 'textarea'){     $value = 'Tekst - meerdere regels'; } if($value == 'radio'){     $value = 'Keuzerondje'; } if($value == 'checkbox'){     $value = 'Meerkeuze'; } if($value == 'select'){     $value = 'Selectieveld'; } if($value == 'tel'){     $value = 'Telefoonnummer'; } if($value == 'email'){     $value = 'E-mailadres'; } if($value == 'number'){     $value = 'Hoeveelheid'; }",
+                                "numeric": false
+                            },
+                            "required": {
+                                "width": "236",
+                                "title": "Verplicht",
+                                "parser": "if($value == 'on'){     $value = 'Verplicht'; }if(!$value){     $value = 'Niet verplicht'; }",
+                                "numeric": false
+                            }
+                        },
+                        "options": null,
+                        "actions": {
+                            "approve": "on",
+                            "edit": "on",
+                            "delete": "on"
+                        },
+                        "preview_url": "",
+                        "related_form": null
+                    }
+                ],
+                "forms": [
+                    {
+                        "id": "9",
+                        "module": "9",
+                        "title": "Formulierveld",
+                        "table": "TitFormBaseFields",
+                        "fields": [
+                            {
+                                "column": "title",
+                                "type": "text",
+                                "title": "Titel * gebruik '[...]' om eenheden aan te geven om bijvoorbeeld 'meter' achter het invulveld van breedte te krijgen",
+                                "subtitle": "",
+                                "options": {
+                                    "validation": "required",
+                                    "sub_type": "",
+                                    "max_length": "",
+                                    "column": "title"
+                                }
+                            },
+                            {
+                                "column": "type",
+                                "type": "list",
+                                "title": "Type *",
+                                "subtitle": "",
+                                "options": {
+                                    "validation": "required",
+                                    "list_type": "static",
+                                    "allow-empty": "No",
+                                    "list": [
+                                        {
+                                            "value": "text",
+                                            "description": "Tekst (enkele regel)"
+                                        },
+                                        {
+                                            "value": "textarea",
+                                            "description": "Tekst (lmeerdere regels)"
+                                        },
+                                        {
+                                            "value": "email",
+                                            "description": "E-mailadres"
+                                        },
+                                        {
+                                            "value": "tel",
+                                            "description": "Telefoonnummer"
+                                        },
+                                        {
+                                            "value": "number",
+                                            "description": "Hoeveelheid"
+                                        },
+                                        {
+                                            "value": "radio",
+                                            "description": "Radio (Select enkel)"
+                                        },
+                                        {
+                                            "value": "checkbox",
+                                            "description": "Checkbox (Meerdere selecteerbaar)"
+                                        },
+                                        {
+                                            "value": "select",
+                                            "description": "Select (Select dropdown)"
+                                        },
+                                        {
+                                            "value": "date",
+                                            "description": "Datum"
+                                        }
+                                    ],
+                                    "pop-table": "",
+                                    "parser": "",
+                                    "column": "type"
+                                }
+                            },
+                            {
+                                "column": "sub_fields",
+                                "type": "matrix",
+                                "title": "Keuze opties (indien van toepassing)",
+                                "subtitle": "is alleen bij checkbox, radio button of selectieveld van toepassing",
+                                "options": {
+                                    "max": "16",
+                                    "style": "list",
+                                    "columns": [
+                                        {
+                                            "type": "list",
+                                            "id": "option-type",
+                                            "title": "Keuze type",
+                                            "subtitle": "",
+                                            "options": "{\"list_type\":\"static\",\"allow-empty\":\"No\",\"list\":[{\"value\":\"normal\",\"description\":\"Standaard optieveld\"},{\"value\":\"textual\",\"description\":\"\\\"Anders, namelijk:\\\" optieveld\"}],\"pop-table\":\"\",\"parser\":\"\"}"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "id": "title",
+                                            "title": "Optie omschrijving",
+                                            "subtitle": "",
+                                            "display_title": "on",
+                                            "options": ""
+                                        }
+                                    ],
+                                    "column": "sub_fields"
+                                }
+                            },
+                            {
+                                "column": "required",
+                                "type": "checkbox",
+                                "title": "Verplicht invullen",
+                                "subtitle": "",
+                                "options": {
+                                    "column": "required"
+                                }
+                            },
+                            {
+                                "column": "error",
+                                "type": "textarea",
+                                "title": "Foutmelding",
+                                "subtitle": "",
+                                "options": {
+                                    "column": "error"
+                                }
+                            }
+                        ],
+                        "default_position": "Bottom",
+                        "return_view": null,
+                        "return_url": "",
+                        "tagging": "",
+                        "hooks": []
+                    }
+                ],
+                "embed_forms": [],
+                "reports": []
+            }
+        ],
+        "templates": [],
+        "callouts": [],
+        "settings": [],
+        "feeds": [],
+        "field_types": [
+            {
+                "id": "com.fastspot.rawtext-field-types*raw-textarea",
+                "name": "Raw Text Area",
+                "use_cases": {
+                    "templates": "on",
+                    "modules": "on",
+                    "callouts": "on",
+                    "settings": "on"
+                },
+                "self_draw": null,
+                "extension": "com.terra-it.tit-form"
+            },
+            {
+                "id": "com.terra-it.tit-form*form",
+                "name": "Formulier",
+                "use_cases": {
+                    "templates": "on",
+                    "modules": "on",
+                    "callouts": "on",
+                    "settings": "on"
+                },
+                "self_draw": null,
+                "extension": "com.terra-it.tit-form"
+            }
+        ],
+        "tables": {
+            "TitFormBaseFields": "CREATE TABLE `TitFormBaseFields` (   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,   `title` varchar(255) DEFAULT NULL,   `usable_title` varchar(255) NOT NULL,   `type` varchar(255) DEFAULT NULL,   `sub_fields` text NOT NULL,   `required` varchar(255) DEFAULT NULL,   `error` text,   `approved` char(2) NOT NULL DEFAULT 'on',   `position` int(11) NOT NULL,   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
+            "languages": "CREATE TABLE `languages` (   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,   `title` varchar(255) DEFAULT NULL,   `country_flag` varchar(255) DEFAULT NULL,   `short_title` varchar(255) DEFAULT NULL,   `root_page_id` varchar(255) DEFAULT NULL,   `approved` char(2) NOT NULL,   `position` int(11) NOT NULL,   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
+            "tit_form": "CREATE TABLE `tit_form` (   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,   `title` varchar(255) DEFAULT NULL,   `language` varchar(255) DEFAULT NULL,   `type` varchar(255) DEFAULT NULL,   `subject` varchar(255) DEFAULT NULL,   `email_to` varchar(255) DEFAULT NULL,   `email_from` varchar(255) DEFAULT NULL,   `image` varchar(255) NOT NULL,   `fields_stage_1` text,   `form_stages` text,   `comment` text,   `reply_template` mediumtext NOT NULL,   `button_text` varchar(255) NOT NULL DEFAULT 'Verzenden',   `error_introduction` text,   `success_message` varchar(255) NOT NULL DEFAULT 'Bericht succesvol verzonden',   `return_title` varchar(255) NOT NULL,   `approved` char(2) NOT NULL DEFAULT 'on',   `position` int(11) NOT NULL,   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
+        }
+    },
+    "sql_revisions": {
+        "2": [
+            "CREATE TABLE `languages` (   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,   `title` varchar(255) DEFAULT NULL,   `country_flag` varchar(255) DEFAULT NULL,   `short_title` varchar(255) DEFAULT NULL,   `root_page_id` varchar(255) DEFAULT NULL,   `approved` char(2) NOT NULL,   `position` int(11) NOT NULL,   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
+        ],
+        "7": [
+            "ALTER TABLE `tit_form` ADD COLUMN `title` varchar(255) NULL DEFAULT NULL AFTER `id`"
+        ],
+        "8": [
+            "ALTER TABLE `tit_form` ADD COLUMN `form_stages` text NULL AFTER `fields_stage_1`",
+            "ALTER TABLE `tit_form` DROP COLUMN `fields_stage_2`",
+            "CREATE TABLE `TitFormBaseFields` (   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,   `title` varchar(255) DEFAULT NULL,   `type` varchar(255) DEFAULT NULL,   `required` varchar(255) DEFAULT NULL,   `error` text,   `approved` char(2) NOT NULL,   `position` int(11) NOT NULL,   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
+        ],
+        "9": [
+            "ALTER TABLE `TitFormBaseFields` ADD COLUMN `usable_title` varchar(255) NOT NULL AFTER `title`",
+            "ALTER TABLE `tit_form` ADD COLUMN `reply_template` text NOT NULL AFTER `comment`"
+        ],
+        "11": [
+            "ALTER TABLE `TitFormBaseFields` ADD COLUMN `sub_fields` text NOT NULL AFTER `type`",
+            "ALTER TABLE `tit_form` ADD COLUMN `return_title` varchar(255) NOT NULL AFTER `error_introduction`"
+        ],
+        "20": [
+            "ALTER TABLE `tit_form` MODIFY COLUMN `reply_template` mediumtext NOT NULL AFTER `comment`"
+        ],
+        "21": [
+            "ALTER TABLE `TitFormBaseFields` MODIFY COLUMN `approved` char(2) NOT NULL DEFAULT 'on' AFTER `error`",
+            "ALTER TABLE `tit_form` MODIFY COLUMN `approved` char(2) NOT NULL DEFAULT 'on' AFTER `return_title`"
+        ],
+        "25": [
+            "ALTER TABLE `tit_form` ADD COLUMN `button_text` varchar(255) NOT NULL DEFAULT 'Verzenden' AFTER `reply_template`"
+        ],
+        "29": [
+            "ALTER TABLE `tit_form` ADD COLUMN `success_message` varchar(255) NOT NULL DEFAULT 'Uw bericht is succesvol verzonden' AFTER `error_introduction`"
+        ],
+        "32": [
+            "ALTER TABLE `tit_form` MODIFY COLUMN `success_message` varchar(255) NOT NULL DEFAULT 'Bericht succesvol verzonden' AFTER `error_introduction`"
+        ]
+    }
+}
