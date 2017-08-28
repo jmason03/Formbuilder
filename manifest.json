@@ -2,10 +2,10 @@
     "type": "extension",
     "id": "com.terra-it.tit-form",
     "version": "1.3.22",
-    "revision": 32,
+    "revision": 33,
     "compatibility": "4.2+",
     "title": "Terra-IT Form Builder",
-    "description": "Bouw makkelijk Contact en bereken uw prijs formulieren. Standaard velden kunnen worden hergebruikt.\r\n\r\n//Changelog 07/07/2017\r\n1 Unclosed div mystery solved?\r\n2 Geen radiogroup meer\r\n3 Gemerged met andere versie\r\n\r\n//Changelog 05/07/2017\r\n1 HTML / php verbeteringen\r\n\r\n//Changelog 04/07/2017\r\n1 Button tekst veranderbaar\r\n2 Geen div meer in een radiogroup\r\n3 Geen form action meer\r\n4 Custom succesmelding instelbaar\r\n\r\n//Changelog 23/05/2017\r\n1 Fieldtype included\r\n2 Section title kan op &amp;amp;amp;amp;amp;amp;amp;amp;quot;verborgen&amp;amp;amp;amp;amp;amp;amp;amp;quot; worden gezet voor de front-end\r\n\r\n\r\n//Changelog 15/02/2017\r\n// 1. Formulierkiezer werkt nu ook goed met meerder formulieren op 1 site\r\n// 2. Formulier template voor bijvoorbeeld mailchimp is nu op te slaan in een bestand\r\n// 3. Mailtemplate voor backend is geupdate\r\n\r\n\r\n// Changelog 07/02/2017\r\n// 1. Sterretjes bij verplicht\r\n// 2. Om elk veld een form input group div gezet voor makkelijke css aanpasbaarheid\r\n// 3. Let op, verwijder de list styling uit elements.less en gebruik form.less voor input velden styling \r\n\r\n//Changelog 03-02-2017\r\n// 1. Namen van formuliersecties zichtbaar\r\n// 2. Formulier introductie tekst zichtbaar.\r\n// 3. Fuck google captcha, het is eruit.\r\n// 4. Random string honeypot en minimale form invultijd honeypot added\r\n// 5. Anders namelijk... bug gefixt.\r\n// 6. Cleaned up\r\n// 7. Server side required velden check fixed\r\n// 8. Elke keer dat een form word gegenereerd krijgt deze een unieke ID, dit maakt meerdere forms op een pagina mogelijk, ook minder kans op misbruik.\r\n// 9. IP Adres van gebruiker word meegestuurd.\r\n\r\n",
+    "description": "Custom form builder -  Dutch language. \r\n\r\n",
     "keywords": [
         "bouw",
         "formulieren",
@@ -24,24 +24,24 @@
     "components": {
         "module_groups": [
             {
-                "id": "5",
+                "id": "9",
                 "name": "Algemeen",
                 "route": "algemeen",
                 "position": "0",
                 "extension": "com.terra-it.tit-form"
             },
             {
-                "id": "6",
+                "id": "10",
                 "name": "TiT Form",
-                "route": "tit-form",
+                "route": "tit-form-2",
                 "position": "0",
                 "extension": "com.terra-it.tit-form"
             }
         ],
         "modules": [
             {
-                "id": "7",
-                "group": "5",
+                "id": "21",
+                "group": "9",
                 "name": "Talen",
                 "route": "com.terra-it.tit-form*talen",
                 "class": "Languages",
@@ -56,25 +56,25 @@
                 "extension": "com.terra-it.tit-form",
                 "actions": [
                     {
-                        "id": "19",
-                        "module": "7",
+                        "id": "75",
+                        "module": "21",
                         "name": "View Talens",
                         "route": "",
                         "in_nav": "on",
                         "form": null,
-                        "view": "7",
+                        "view": "21",
                         "report": null,
                         "class": "list",
                         "level": "0",
                         "position": "1"
                     },
                     {
-                        "id": "20",
-                        "module": "7",
+                        "id": "76",
+                        "module": "21",
                         "name": "Add Talen",
                         "route": "add",
                         "in_nav": "on",
-                        "form": "7",
+                        "form": "27",
                         "view": null,
                         "report": null,
                         "class": "add",
@@ -82,12 +82,12 @@
                         "position": "0"
                     },
                     {
-                        "id": "21",
-                        "module": "7",
+                        "id": "77",
+                        "module": "21",
                         "name": "Edit Talen",
                         "route": "edit",
                         "in_nav": "",
-                        "form": "7",
+                        "form": "27",
                         "view": null,
                         "report": null,
                         "class": "edit",
@@ -97,8 +97,8 @@
                 ],
                 "views": [
                     {
-                        "id": "7",
-                        "module": "7",
+                        "id": "21",
+                        "module": "21",
                         "title": "Talens",
                         "description": "",
                         "type": "draggable",
@@ -141,8 +141,8 @@
                 ],
                 "forms": [
                     {
-                        "id": "7",
-                        "module": "7",
+                        "id": "27",
+                        "module": "21",
                         "title": "Talen",
                         "table": "languages",
                         "fields": [
@@ -203,8 +203,8 @@
                 "reports": []
             },
             {
-                "id": "8",
-                "group": "6",
+                "id": "22",
+                "group": "10",
                 "name": "Formulieren",
                 "route": "com.terra-it.tit-form*tit-form",
                 "class": "TitForm",
@@ -219,25 +219,25 @@
                 "extension": "com.terra-it.tit-form",
                 "actions": [
                     {
-                        "id": "22",
-                        "module": "8",
+                        "id": "78",
+                        "module": "22",
                         "name": "View TiT Forms",
                         "route": "",
                         "in_nav": "on",
                         "form": null,
-                        "view": "8",
+                        "view": "22",
                         "report": null,
                         "class": "list",
                         "level": "0",
                         "position": "1"
                     },
                     {
-                        "id": "23",
-                        "module": "8",
+                        "id": "79",
+                        "module": "22",
                         "name": "Add TiT Form",
                         "route": "add",
                         "in_nav": "on",
-                        "form": "8",
+                        "form": "28",
                         "view": null,
                         "report": null,
                         "class": "add",
@@ -245,12 +245,12 @@
                         "position": "0"
                     },
                     {
-                        "id": "24",
-                        "module": "8",
+                        "id": "80",
+                        "module": "22",
                         "name": "Edit TiT Form",
                         "route": "edit",
                         "in_nav": "",
-                        "form": "8",
+                        "form": "28",
                         "view": null,
                         "report": null,
                         "class": "edit",
@@ -260,8 +260,8 @@
                 ],
                 "views": [
                     {
-                        "id": "8",
-                        "module": "8",
+                        "id": "22",
+                        "module": "22",
                         "title": "TiT Forms",
                         "description": "",
                         "type": "draggable",
@@ -298,8 +298,8 @@
                 ],
                 "forms": [
                     {
-                        "id": "8",
-                        "module": "8",
+                        "id": "28",
+                        "module": "22",
                         "title": "TiT Form",
                         "table": "tit_form",
                         "fields": [
@@ -507,8 +507,8 @@
                 "reports": []
             },
             {
-                "id": "9",
-                "group": "6",
+                "id": "23",
+                "group": "10",
                 "name": "Formuliervelden",
                 "route": "com.terra-it.tit-form*tit-form-basis-velden",
                 "class": "TitFormBaseFields",
@@ -523,25 +523,25 @@
                 "extension": "com.terra-it.tit-form",
                 "actions": [
                     {
-                        "id": "25",
-                        "module": "9",
+                        "id": "81",
+                        "module": "23",
                         "name": "View TiT Form Formuliervelden",
                         "route": "",
                         "in_nav": "on",
                         "form": null,
-                        "view": "9",
+                        "view": "23",
                         "report": null,
                         "class": "list",
                         "level": "0",
                         "position": "1"
                     },
                     {
-                        "id": "26",
-                        "module": "9",
+                        "id": "82",
+                        "module": "23",
                         "name": "Add Formulierveld",
                         "route": "add",
                         "in_nav": "on",
-                        "form": "9",
+                        "form": "29",
                         "view": null,
                         "report": null,
                         "class": "add",
@@ -549,12 +549,12 @@
                         "position": "0"
                     },
                     {
-                        "id": "27",
-                        "module": "9",
+                        "id": "83",
+                        "module": "23",
                         "name": "Edit Formulierveld",
                         "route": "edit",
                         "in_nav": "",
-                        "form": "9",
+                        "form": "29",
                         "view": null,
                         "report": null,
                         "class": "edit",
@@ -564,8 +564,8 @@
                 ],
                 "views": [
                     {
-                        "id": "9",
-                        "module": "9",
+                        "id": "23",
+                        "module": "23",
                         "title": "TiT Form Formuliervelden",
                         "description": "",
                         "type": "draggable",
@@ -602,8 +602,8 @@
                 ],
                 "forms": [
                     {
-                        "id": "9",
-                        "module": "9",
+                        "id": "29",
+                        "module": "23",
                         "title": "Formulierveld",
                         "table": "TitFormBaseFields",
                         "fields": [
