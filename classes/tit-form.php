@@ -73,6 +73,22 @@ function replace_key_function($array, $key1, $key2)
     return $array;
 }
 
+// Haal alle values op uit de array boy
+function array_values_recursive($array) {
+  $flat = array();
+
+  foreach($array as $value) {
+    if (is_array($value)) {
+        $flat = array_merge($flat, array_values_recursive($value));
+    }
+    else {
+        $flat[] = $value;
+    }
+  }
+  return $flat;
+}
+
+
 
 class TitForm extends BigTreeModule {
     var $Table = "tit_form";
@@ -85,7 +101,6 @@ class TitForm extends BigTreeModule {
         // Security first. Maakt random bytes en zet deze verderop als input name en in sessie voor vergelijking.
         // Zet tijd verderop ook in input, check deze later tijdens post validatie.
         // =======================================================================//
-
         $noSpamIdentifier = md5(uniqid('',false));
         if(!empty($_SESSION['spam-iden'])){
             // doe niks sessie is al gezet?
@@ -115,7 +130,7 @@ class TitForm extends BigTreeModule {
 
         if ($formItems['type'] == 'calculate-form'){
             $formClass = 'calculate-item';
-            $disabled = 'style="display:none;"';
+            $disabled = 'form-disabled';
             $buttonDisabled = 'disabled-button';
         }else{
             $formClass = '';
@@ -130,11 +145,12 @@ class TitForm extends BigTreeModule {
                     $stages[$key] = $value;
                 }
             }
+
             // Verkrijg de juiste velden uit de mess
-            foreach($stages as $stage){
-                if(is_array($stage)){
-                    foreach($stage as $stageItem){
-                        if (isset($stageItem['section'])){
+            foreach($stages as $stage) {
+                if (is_array($stage)) {
+                    foreach ($stage as $stageItem) {
+                        if (isset($stageItem['section'])) {
                             $fields[] = $stageItem['section'];
                         }
                     }
@@ -154,15 +170,18 @@ class TitForm extends BigTreeModule {
                     }
 
                     // Titel voor een nieuw RTL programma: op zoek naar de error.
-                    foreach($fieldItems as $fieldItem) {
-                        if($fieldItem['required'] == 'on'){
-                            if($fieldItem['type'] == 'email' && preg_match('/mail/',strtolower($fieldItem['title']))){
-                                $errorInfos[] = array($fieldItem['type'] => $fieldItem['error']);
-                            }else{
-                                $errorInfos[] = array($fieldItem['title'] => $fieldItem['error']);
+                    if (isset($fieldItems)) {
+                        foreach($fieldItems as $fieldItem) {
+                            if($fieldItem['required'] == 'on'){
+                                if($fieldItem['type'] == 'email' && preg_match('/mail/',strtolower($fieldItem['title']))){
+                                    $errorInfos[] = array($fieldItem['type'] => $fieldItem['error']);
+                                }else{
+                                    $errorInfos[] = array($fieldItem['title'] => $fieldItem['error']);
+                                }
                             }
                         }
                     }
+                    
 
                     if ($errorInfos){
                         foreach($errorInfos as $errorInfo){
@@ -173,12 +192,14 @@ class TitForm extends BigTreeModule {
                             }
                         }
                     }
+
                 }
             }
 
             if($errorInfos){
                 $errorInfoFields = array_unique($rightError, SORT_REGULAR);
             }
+
         }elseif($form = false){
             echo'Form could not be found.';
             die;
@@ -189,17 +210,21 @@ class TitForm extends BigTreeModule {
 
             // Clean de post een beetje
             $post = array();
+            $arrayValues = array();
+
             foreach ($_POST as $key => $value) {
 
                 if(is_array($value)){
-                    foreach($value as $key => $value){
-                        $post[$key] = Bigtree::safeEncode(strip_tags(trim($value)));
+                    foreach($value as $array_key => $array_value){
+                        $arrayValues[] = Bigtree::safeEncode(strip_tags(trim($array_value)));
                     }
+
+                    $post[$key] = implode(", ", $arrayValues);
+                    unset($arrayValues);
                 }else{
                     $post[$key] = Bigtree::safeEncode(strip_tags(trim($value)));
                 }
             }
-
 
 
             // Vergelijk sessie code met post, klopt dit niet, verzenden we niks.
@@ -217,44 +242,42 @@ class TitForm extends BigTreeModule {
                     }
                 }
 
-                foreach($fieldItems as $fieldItem){
-                    foreach($fieldItem as $fieldKey => $fieldValue){
+
+                // Haal alle values op, functie bovenin pagina
+                $fieldItems = array_values_recursive($fieldItems);
+
+                foreach($fieldItems as $fieldKey => $fieldValue){
+                    if (!empty($fieldValue)) {
                         //Originele titels met "_" om e-mails te kunnen versturen
                         $cleanTitles[] = $fieldValue;
                         //Maak mooie titels zonder "_" voor in e-mail die wordt verstuurd
                         $fixedTitles[] = str_replace(' ', '_', $fieldValue);
+                    }
+                }
 
-                        foreach($fixedTitles as $fixedTitle){
+                foreach($post as $postKey => $postValue){
 
-                            foreach ($postKeys as $postKey) {
-                                if ($postKey == $fixedTitle) {
-                                    // Prepareer HTML email values;
-                                    foreach ($post as $postKey => $postValue) {
+                    if (in_array($postKey, $fixedTitles)) {
+                        $mailPrepares[$postKey] = $postValue;
+                        
+                        if ($postKey == 'email' && !empty($postValue)){
+                            $reply = true;
+                        }
+                    }
+                }
 
-                                        if ($postKey == 'email' && !empty($postValue)){
-                                            $reply = true;
-                                        }
+                if (isset($mailPrepares) && !empty($mailPrepares)) {
 
-                                        foreach($cleanTitles as $cleanTitle){
-                                            $mailPrepares[$postKey] = $postValue;
-                                        }
-
-                                        foreach($mailPrepares as $key => $value){
-                                            if($key == $fixedTitle){
-                                                foreach($cleanTitles as $cleanTitle){
-                                                    if (str_replace(' ', '_', $cleanTitle) == $key){
-                                                        //Gecleande formuliervelden
-                                                        $mailItems[$cleanTitle] = $value;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                    foreach($mailPrepares as $key => $value){
+                        foreach($cleanTitles as $cleanTitle){
+                            if (str_replace(' ', '_', $cleanTitle) == $key){
+                                //Gecleande formuliervelden
+                                $mailItems[$cleanTitle] = $value;
                             }
                         }
                     }
                 }
+
             }else{
                 $errors[] = 'Spambot detected!';
             }
@@ -265,6 +288,7 @@ class TitForm extends BigTreeModule {
             if (is_array($errors)){
                 $errors = array_unique($errors);
             }
+
 
             //Errors gevonden? laat maar zien, zo niet, verzend die mail
             if(count($errors) > 0){
@@ -324,12 +348,16 @@ class TitForm extends BigTreeModule {
                     BigTree::sendEmail($to, $subject, $html, '', $from, false, false, false);
                 }
 
-                // Zet unieke form identifier in sessie voor later use (redirect etc)
-                foreach($post as $postKey => $postValue){
-                    if (!empty($postKey) && $postKey === 'identifier'){
-                        $_SESSION["identifier"] === $postValue;
-                    }
+                if (!empty($post['identifier']) && isset($post['identifier'])) {
+                    $_SESSION["identifier"] = $post['identifier'];
                 }
+
+                // Zet unieke form identifier in sessie voor later use (redirect etc)
+                // foreach($post as $postKey => $postValue){
+                //     if (!empty($postKey) && $postKey === 'identifier'){
+                //         $_SESSION["identifier"] === $postValue;
+                //     }
+                // }
 
                 // Redirect naar de juiste identifier.
                 $link = trim($page['link'], '/');
@@ -411,6 +439,7 @@ class TitForm extends BigTreeModule {
                                             $check = array();
                                             foreach ($fieldItems as $fieldItem) {
                                                 if (isset($fieldItem['id']) && $fieldItem['id'] == $section) {
+
                                                     // Zorg voor alleen unieke velden
                                                     if (!in_array($fieldItem[0], $check)) {
 
@@ -428,10 +457,10 @@ class TitForm extends BigTreeModule {
                                                         switch ($fieldItem['type']) {
                                                             //Tekstveld standaard
                                                             case 'text':
-                                                                echo('<div class="form-input-group"><input class="field-item '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $fieldItem['title'] .$star.'" ' . $required . '></div>');
+                                                                echo('<div class="form-input-group"><input class="field-item '.$fieldItem['type'].'" name="' .$fieldItem['title']. '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $fieldItem['title'] .$star.'" ' . $required . '></div>');
                                                                 break;
                                                             case 'email':
-                                                                echo('<div class="form-input-group"><input class="field-item" name="' . $fieldItem['type'] . '" value="' . $post[$rtitle] . '" type="email" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '></div>');
+                                                                echo('<div class="form-input-group"><input class="field-item" name="' .$fieldItem['title']. '" value="' . $post[$rtitle] . '" type="email" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '></div>');
                                                                 break;
                                                             case 'tel':
                                                                 echo('<div class="form-input-group"><input class="field-item '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '></div>');
@@ -483,6 +512,7 @@ class TitForm extends BigTreeModule {
                                                                 }
                                                                 break;
                                                             case 'checkbox':
+                                                                unset($rtitle);
                                                                 echo (!empty($fieldItem['title'])) ? '<div class="form-input-group"><strong>' . $fieldItem['title'].$star.'</strong>' : '';
 
                                                                 if (count($fieldItem['sub_fields']) > 1) {
@@ -490,21 +520,21 @@ class TitForm extends BigTreeModule {
                                                                 } else {
                                                                     $chbxTitle = $fieldItem['title'];
                                                                 }
-                                                                echo ('<fieldset class="field-item">');
+                                                                echo ('<fieldset class="field-item '.$required.'">');
                                                                 foreach ($fieldItem['sub_fields'] as $checkboxField) {
                                                                     $rtitle = str_replace(' ', '_', $checkboxField['title']);
 
                                                                     // Input value als form errors aanwezig zijn
                                                                     if (isset($post) && in_array($rtitle, $post)) {
-                                                                        echo('<label>
-                                                                            <input class="field-item '.$fieldItem['type'].'" type="checkbox" name="' . $chbxTitle . '" value="' . $checkboxField['title'] . '" ' . $required . ' checked>
+                                                                        echo('<div class="check-group ' .$required.'"><label>
+                                                                            <input class="field-item '.$fieldItem['type'].'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $rtitle . '" checked>
                                                                                 ' . $checkboxField['title'] . '
-                                                                            </label>');
+                                                                            </label></div>');
                                                                     } else {
-                                                                        echo('<label>
-                                                                            <input class="field-item '.$fieldItem['type'].'" type="checkbox" name="' . $chbxTitle . '" value="' . $checkboxField['title'] . '" ' . $required . '>
+                                                                        echo('<div class="check-group ' .$required.'"><label for="'.$rtitle.'">
+                                                                            <input class="field-item '.$fieldItem['type'].'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $rtitle . '">
                                                                                 ' . $checkboxField['title'] . '
-                                                                            </label>');
+                                                                            </label></div>');
                                                                     }
                                                                 }
                                                                 echo ('</fieldset></div>');
@@ -555,7 +585,7 @@ class TitForm extends BigTreeModule {
                                     }
                                 }
                                 if($i < 4){
-                                    echo '</div><div class="col-6 col-small-12 col-mobile-12 form-item '.$formClass.'" '.$disabled.'>';
+                                    echo '</div><div class="col-6 col-small-12 col-mobile-12 form-item '.$disabled.' '.$formClass.'">';
                                 }elseif($i <= 1){
 
                                 }
